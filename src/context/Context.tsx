@@ -8,11 +8,13 @@ import { type ReactNode, createContext, useState } from 'react';
 
 type AppState = {
 	isSidebarOpen: boolean;
+	pageID: string;
 };
 
 export type AppContextValue = AppState & {
 	openSidebar: () => void;
 	closeSidebar: () => void;
+	setPageID: (pageID: string) => void;
 };
 
 export const AppContext = createContext<AppContextValue | null>(null);
@@ -29,6 +31,8 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+	const [pageID, setPageID] = useState('');
+
 	const openSidebar = () => setIsSidebarOpen(true);
 	const closeSidebar = () => setIsSidebarOpen(false);
 
@@ -36,6 +40,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 		openSidebar,
 		closeSidebar,
 		isSidebarOpen,
+		pageID,
+		setPageID,
 	};
 
 	return <AppContext.Provider value={ctx}>{children}</AppContext.Provider>;
